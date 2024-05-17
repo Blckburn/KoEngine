@@ -1,3 +1,7 @@
+#ifndef STB_IMAGE_H
+#define STB_IMAGE_H
+
+
 /* stb_image - v2.29 - public domain image loader - http://nothings.org/stb
                                   no warranty implied; use at your own risk
 
@@ -7983,3 +7987,4 @@ ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ------------------------------------------------------------------------------
 */
+#endif // STB_IMAGE_H

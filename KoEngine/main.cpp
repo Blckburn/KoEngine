@@ -1,81 +1,90 @@
-﻿#include <SDL.h>
+﻿#include <glad/glad.h> // Включаем glad.h перед всеми другими OpenGL заголовками
+#include <GLFW/glfw3.h>
 #include <iostream>
-#include "game_object.h"
-#include "level.h"
-#include "player.h"
 #include "shader.h"
 #include "camera.h"
+#include "level.h"
+#include "player.h"
 
-const unsigned int SCREEN_WIDTH = 800;
-const unsigned int SCREEN_HEIGHT = 600;
+// Ширина и высота окна
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
 
-int main(int argc, char* args[]) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow* window);
+
+int main()
+{
+    // Инициализация GLFW
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    // Создание окна GLFW
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    if (window == NULL)
+    {
+        std::cerr << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    // Инициализация GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cerr << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
-    SDL_Window* window = SDL_CreateWindow("KoEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-    if (!window) {
-        std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
-        return -1;
-    }
+    // Компиляция шейдеров
+    Shader ourShader("path/to/vertex_shader.vs", "path/to/fragment_shader.fs");
 
-    SDL_GLContext glContext = SDL_GL_CreateContext(window);
-    if (!glContext) {
-        std::cerr << "OpenGL context could not be created! SDL_Error: " << SDL_GetError() << std::endl;
-        return -1;
-    }
-
-    // Initialize GLEW
-    glewExperimental = GL_TRUE;
-    GLenum err = glewInit();
-    if (err != GLEW_OK) {
-        std::cerr << "Error initializing GLEW: " << glewGetErrorString(err) << std::endl;
-        return -1;
-    }
-
-    // OpenGL settings
-    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    // Конфигурация глобальных состояний OpenGL
     glEnable(GL_DEPTH_TEST);
 
-    Shader ourShader("path/to/shaders/shader.vs", "path/to/shaders/shader.fs");
-
-    Player player;
+    // Загрузка уровня и игрока
     Level level;
-    Camera camera;
+    Player player;
 
-    bool quit = false;
-    SDL_Event event;
+    // Основной цикл рендеринга
+    while (!glfwWindowShouldClose(window))
+    {
+        // Обработка ввода
+        processInput(window);
 
-    while (!quit) {
-        while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_QUIT) {
-                quit = true;
-            }
-        }
-
-        // Input handling
-        player.handleInput(event);
-
-        // Logic update
-        player.update();
-        camera.update(player);
-
-        // Rendering
+        // Очистка экрана
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        // Использование шейдерной программы
         ourShader.use();
-        camera.setViewMatrix(ourShader);
 
-        level.draw(ourShader);
-        player.draw(ourShader);
+        // Установка необходимых состояний OpenGL
+        glEnable(GL_DEPTH_TEST);
 
-        SDL_GL_SwapWindow(window);
+        // Обновление и отрисовка объектов
+        player.update();
+        level.render(ourShader);
+
+        // Обновление окна
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-
+    // Освобождение ресурсов
+    glfwTerminate();
     return 0;
+}
+
+void processInput(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
 }
