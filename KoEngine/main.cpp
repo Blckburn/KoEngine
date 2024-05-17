@@ -1,31 +1,25 @@
-﻿#include <glad/glad.h> // Включаем glad.h перед всеми другими OpenGL заголовками
+﻿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
 #include "shader.h"
-#include "camera.h"
-#include "level.h"
 #include "player.h"
-
-// Ширина и высота окна
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+#include "controller.h"
+#include "level.h"
+#include <iostream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
-int main()
-{
+int main() {
     // Инициализация GLFW
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // Создание окна GLFW
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cerr << "Failed to create GLFW window" << std::endl;
+    // Создание окна
+    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    if (window == NULL) {
+        std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return -1;
     }
@@ -33,58 +27,38 @@ int main()
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // Инициализация GLAD
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
 
-    // Компиляция шейдеров
-    Shader ourShader("path/to/vertex_shader.vs", "path/to/fragment_shader.fs");
-
-    // Конфигурация глобальных состояний OpenGL
-    glEnable(GL_DEPTH_TEST);
-
-    // Загрузка уровня и игрока
-    Level level;
-    Player player;
-
     // Основной цикл рендеринга
-    while (!glfwWindowShouldClose(window))
-    {
+    while (!glfwWindowShouldClose(window)) {
         // Обработка ввода
         processInput(window);
 
-        // Очистка экрана
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        // Рендеринг
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        // Использование шейдерной программы
-        ourShader.use();
+        // Здесь будет ваш код рендеринга
 
-        // Установка необходимых состояний OpenGL
-        glEnable(GL_DEPTH_TEST);
-
-        // Обновление и отрисовка объектов
-        player.update();
-        level.render(ourShader);
-
-        // Обновление окна
+        // Обмен содержимым буферов
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
-    // Освобождение ресурсов
+    // Очистка ресурсов и завершение работы
     glfwTerminate();
     return 0;
 }
 
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
+void processInput(GLFWwindow* window) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, true);
+    }
 }

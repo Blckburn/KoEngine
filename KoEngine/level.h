@@ -1,14 +1,16 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#pragma once
 
+#include <vector>
 #include "shader.h"
 
 class Level {
 public:
-    void drawFloor(const Shader& shader) const;
+    Level();
     void render(const Shader& shader) const;
+
 private:
-    unsigned int VAO;
+    unsigned int VAO, VBO;
+    void setupLevel();
+    void drawFloor(const Shader& shader) const;
 };
 
-#endif // LEVEL_H

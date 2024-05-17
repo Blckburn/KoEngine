@@ -1,9 +1,13 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
+#include "game_object.h"
 #include "player.h"
 
-void updatePhysics(Player& player, float radius, float bounceDamping);
-void handleCollision(Player& player1, Player& player2, float radius);
+class Physics {
+public:
+    void update(GameObject& object, float deltaTime);
+    void update(Player& player, float deltaTime);
+};
 
-#endif
+#endif // PHYSICS_H

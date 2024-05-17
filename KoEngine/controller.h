@@ -1,11 +1,9 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
+#pragma once
 
-#include "player.h"
+class Player;
+struct GLFWwindow;
 
 class Controller {
 public:
-    void processInput(Player& player);
+    void processInput(Player& player, GLFWwindow* window);
 };
-
-#endif // CONTROLLER_H

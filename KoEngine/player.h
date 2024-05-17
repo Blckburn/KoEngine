@@ -1,14 +1,20 @@
-#ifndef PLAYER_H
-#define PLAYER_H
-
-#include <glm/glm.hpp>
+#pragma once
 
 class Player {
 public:
-    glm::vec3 position;
-    float xSpeed, ySpeed, angularSpeed;
-    float xAcceleration, yAcceleration, angularAcceleration;
+    float xPosition;
+    float yPosition;
+    float zPosition;
+    float xSpeed;
+    float ySpeed;
+    float angularSpeed;
+    float xAcceleration;
+    float yAcceleration;
+    float angularAcceleration;
     float rotation;
-};
+    float xOffset;
+    float yOffset;
+    float zOffset;
 
-#endif // PLAYER_H
+    Player();
+};
