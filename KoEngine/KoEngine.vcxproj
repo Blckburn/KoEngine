@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="character_model.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="game_object.h" />
     <ClInclude Include="glfw3.h" />

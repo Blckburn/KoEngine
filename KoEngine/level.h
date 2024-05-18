@@ -1,18 +1,19 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include <glm/glm.hpp>
+#include <glad/glad.h> // GLAD должен быть включен до всех других заголовков OpenGL
 #include "shader.h"
 #include "texture.h"
 
 class Level {
 public:
-    Level(const Texture& texture);
+    Level();
     void render(const Shader& shader) const;
+
 private:
-    unsigned int VAO, VBO;
-    const Texture& texture;
     void setupLevel();
+    GLuint floorVAO, floorVBO;
+    Texture floorTexture;
 };
 
 #endif
