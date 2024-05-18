@@ -1,18 +1,22 @@
-#include "controller.h"
-#include "player.h"
-#include <GLFW/glfw3.h>
-
-void Controller::processInput(Player& player, GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        player.yAcceleration += 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        player.yAcceleration -= 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        player.xAcceleration -= 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        player.xAcceleration += 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-        player.angularAcceleration -= 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-        player.angularAcceleration += 0.1f;
-}
+//#include "controller.h"
+//
+//Controller::Controller(Player& player) : player(player) {}
+//
+//void Controller::processInput(const SDL_Event& event, float deltaTime) {
+//    if (event.type == SDL_KEYDOWN) {
+//        switch (event.key.keysym.sym) {
+//        case SDLK_w:
+//            player.setVelocityY(player.getVelocityY() + player.getAcceleration() * deltaTime);
+//            break;
+//        case SDLK_s:
+//            player.setVelocityY(player.getVelocityY() - player.getAcceleration() * deltaTime);
+//            break;
+//        case SDLK_a:
+//            player.setVelocityX(player.getVelocityX() - player.getAcceleration() * deltaTime);
+//            break;
+//        case SDLK_d:
+//            player.setVelocityX(player.getVelocityX() + player.getAcceleration() * deltaTime);
+//            break;
+//        }
+//    }
+//}

@@ -1,16 +1,18 @@
-#pragma once
+#ifndef LEVEL_H
+#define LEVEL_H
 
-#include <vector>
+#include <glm/glm.hpp>
 #include "shader.h"
+#include "texture.h"
 
 class Level {
 public:
-    Level();
+    Level(const Texture& texture);
     void render(const Shader& shader) const;
-
 private:
     unsigned int VAO, VBO;
+    const Texture& texture;
     void setupLevel();
-    void drawFloor(const Shader& shader) const;
 };
 
+#endif

@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\C++\glm;C:\C++\glfw-3.4\include;C:\C++\glew-2.1.0\include;C:\C++\SDL2-2.30.3\include;C:\C++\glad\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\C++\glew-2.1.0\lib\Release\x64;C:\C++\SDL2-2.30.3\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\C++\glm;C:\C++\SDL2_image-2.8.2\include;C:\C++\glfw-3.4\include;C:\C++\glew-2.1.0\include;C:\C++\SDL2-2.30.3\include;C:\C++\glad\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\C++\SDL2_image-2.8.2\lib\x64;C:\C++\glfw-3.4\src\Debug;C:\C++\glew-2.1.0\lib\Release\x64;C:\C++\SDL2-2.30.3\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -113,7 +113,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;glfw3.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\C++\SDL2-2.30.3\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -158,6 +158,7 @@
     <ClInclude Include="level.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="physics.h" />
+    <ClInclude Include="SDL_image.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="texture.h" />

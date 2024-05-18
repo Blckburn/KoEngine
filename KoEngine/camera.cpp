@@ -1,9 +1,8 @@
 #include "camera.h"
-#include "player.h"
 
-Camera::Camera(Player& player) : player(player) {}
+Camera::Camera(glm::vec3 position)
+    : Position(position), Front(glm::vec3(0.0f, 0.0f, -1.0f)), Up(glm::vec3(0.0f, 1.0f, 0.0f)) {}
 
-void Camera::update() {
-    // »змен€ем позицию камеры на основе позиции игрока
-    Position = glm::vec3(player.xPosition, player.yPosition, player.zPosition);
+glm::mat4 Camera::GetViewMatrix() const {
+    return glm::lookAt(Position, Position + Front, Up);
 }

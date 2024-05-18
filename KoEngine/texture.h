@@ -1,16 +1,17 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+#include <string>
+#include <glad/glad.h>
+#include <SDL_image.h>
+
 class Texture {
 public:
     unsigned int ID;
-
-    Texture(const char* imagePath);
-
+    Texture(const std::string& path);
     void bind() const;
-
 private:
-    void loadTexture(const char* imagePath);
+    void loadTexture(const std::string& path);
 };
 
-#endif // TEXTURE_H
+#endif
